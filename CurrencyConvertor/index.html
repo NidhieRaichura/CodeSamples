@@ -1,0 +1,59 @@
+<!Doctype Html>
+
+<head>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+    var Url = "https://api.fixer.io/latest?symbols=INR,USD&base=INR"
+
+    function convert() {
+        $.ajax({
+            type: "GET",
+            async: true,
+            url: Url,
+            datatype: "JSON",
+            success: function (data) {
+
+                var sourceAmount = document.getElementById("txtSourceAmount").value;
+                var sourceCurrency = document.querySelector('input[name = "convertor"]:checked').value;
+                var targetCurrency = document.querySelector('input[name = "convertor"]:not(:checked)').value;
+
+                var rate = data.rates.USD;
+                if (document.getElementById("INR").checked == true) {
+                    var targetAmount = sourceAmount * rate;
+
+                }
+                else if (document.getElementById("USD").checked == true) {
+                    var targetAmount = sourceAmount / rate;
+                }
+
+                document.getElementById("lblMessage").innerHTML = sourceAmount + " " + sourceCurrency + " is " + targetAmount + " " + targetCurrency;
+
+            },
+            failure: function (error) {
+                console.log(error.message);
+            }
+        });
+    }
+
+</script>
+<style>
+    body {
+        font-family: calibri;
+    }
+</style>
+
+<body>
+    <form>
+        <label for="INR">INR</label>
+        <input type="radio" name="convertor" id="INR" value="INR" checked="checked">
+        <label for="USD">USD</label>
+        <input type="radio" name="convertor" id="USD" value="USD">
+        </br>
+        <input type="number" id="txtSourceAmount" required placeholder="Enter INR currency">
+        <input type="button" onclick="convert()" value="convert" /><br/><br/>
+        <label id="lblMessage"></label>
+    </form>
+</body>
+
+</html>
