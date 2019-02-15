@@ -1,2 +1,2 @@
-# CodeSamples
-My Code Samples
+# Javascript CodeSamples
+Javascript ajax call to API
